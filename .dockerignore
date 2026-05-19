@@ -1,0 +1,13 @@
+.git
+.github
+.next
+.agents
+.codex
+node_modules
+npm-debug.log*
+Dockerfile
+.dockerignore
+.env
+.env*
+tsconfig.tsbuildinfo
+ufc-data-dashboard.pbix
