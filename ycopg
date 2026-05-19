@@ -1,0 +1,59 @@
+                                  View "public.current_event_predictions"
+        Column         |           Type           | Collation | Nullable | Default | Storage  | Description 
+-----------------------+--------------------------+-----------+----------+---------+----------+-------------
+ event_id              | uuid                     |           |          |         | plain    | 
+ event_name            | text                     |           |          |         | extended | 
+ event_date            | date                     |           |          |         | plain    | 
+ city                  | text                     |           |          |         | extended | 
+ state                 | text                     |           |          |         | extended | 
+ country               | text                     |           |          |         | extended | 
+ event_status          | text                     |           |          |         | extended | 
+ fight_id              | uuid                     |           |          |         | plain    | 
+ is_title_fight        | boolean                  |           |          |         | plain    | 
+ is_interim_title      | boolean                  |           |          |         | plain    | 
+ scheduled_rounds      | smallint                 |           |          |         | plain    | 
+ fighter_1_id          | uuid                     |           |          |         | plain    | 
+ fighter_2_id          | uuid                     |           |          |         | plain    | 
+ fighter_1_name        | text                     |           |          |         | extended | 
+ fighter_2_name        | text                     |           |          |         | extended | 
+ weight_class          | text                     |           |          |         | extended | 
+ predicted_prob_f1     | numeric(6,4)             |           |          |         | main     | 
+ calibrated_prob_f1    | numeric(6,4)             |           |          |         | main     | 
+ predicted_label       | integer                  |           |          |         | plain    | 
+ predicted_winner_name | text                     |           |          |         | extended | 
+ confidence_tier       | text                     |           |          |         | extended | 
+ is_uncertain          | boolean                  |           |          |         | plain    | 
+ model_name            | text                     |           |          |         | extended | 
+ model_artifact        | text                     |           |          |         | extended | 
+ scored_at             | timestamp with time zone |           |          |         | plain    | 
+View definition:
+ SELECT e.event_id,
+    e.event_name,
+    e.event_date,
+    e.city,
+    e.state,
+    e.country,
+    e.event_status,
+    f.fight_id,
+    f.is_title_fight,
+    f.is_interim_title,
+    f.scheduled_rounds,
+    lp.fighter_1_id,
+    lp.fighter_2_id,
+    lp.fighter_1_name,
+    lp.fighter_2_name,
+    lp.weight_class,
+    lp.predicted_prob_f1,
+    lp.calibrated_prob_f1,
+    lp.predicted_label,
+    lp.predicted_winner_name,
+    lp.confidence_tier,
+    lp.is_uncertain,
+    lp.model_name,
+    lp.model_artifact,
+    lp.scored_at
+   FROM latest_predictions lp
+     JOIN fights f ON f.fight_id = lp.fight_id
+     JOIN events e ON e.event_id = f.event_id
+  WHERE e.event_status = 'upcoming'::text OR e.event_date >= CURRENT_DATE;
+
