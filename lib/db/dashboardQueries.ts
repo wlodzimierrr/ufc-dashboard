@@ -311,6 +311,8 @@ export async function getAccuracyOverTime(): Promise<AccuracyOverTimePoint[]> {
         SUM(CASE WHEN is_correct = true THEN 1 ELSE 0 END) as correct_today
       FROM pre_event_prediction_fights
       WHERE event_date IS NOT NULL
+        AND event_date <= CURRENT_DATE
+        AND is_correct IS NOT NULL
       GROUP BY DATE(event_date)
       ORDER BY DATE(event_date)
     ),
