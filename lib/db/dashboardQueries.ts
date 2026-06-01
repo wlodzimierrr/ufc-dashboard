@@ -33,6 +33,7 @@ export async function getDashboardSummary(): Promise<DashboardSummary> {
     WITH reviewed_fights AS (
       SELECT *
       FROM pre_event_prediction_fights
+      WHERE correct IS NOT NULL
     ),
     upcoming AS (
       SELECT COUNT(*) as upcoming_predictions_count
@@ -279,6 +280,7 @@ export async function getAccuracyByConfidenceTier(): Promise<ConfidenceTierStat[
       COALESCE(ROUND(SUM(CASE WHEN is_correct = true THEN 1 ELSE 0 END)::numeric / NULLIF(COUNT(*), 0), 4), 0) as accuracy,
       COALESCE(ROUND(AVG(CASE WHEN predicted_prob_f1 >= 0.5 THEN calibrated_prob_f1 ELSE 1 - calibrated_prob_f1 END), 4), 0) as average_probability
     FROM pre_event_prediction_fights
+    WHERE is_correct IS NOT NULL
     GROUP BY
       CASE 
         WHEN is_uncertain = true THEN 'Uncertain'
