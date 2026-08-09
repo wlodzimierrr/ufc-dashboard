@@ -46,7 +46,16 @@ export default function RootLayout({
           <footer className="bg-gray-900 border-t border-gray-800 mt-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
               <p className="text-sm text-gray-500 text-center">
-                UFC Fight Prediction Dashboard • Powered by ML models trained on UFCStats data
+                Made by{" "}
+                <a
+                  href="https://wlodzimierrr.pl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-gray-700"
+                >
+                  wlodzimierrr
+                </a>
+                , Codex and Claude • Powered by calibrated XGBoost model trained on UFCStats data
               </p>
             </div>
           </footer>
