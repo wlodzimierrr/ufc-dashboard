@@ -34,6 +34,9 @@ export default function RootLayout({
                   <a href="/analytics" className="text-gray-400 hover:text-white transition-colors">
                     Analytics
                   </a>
+                  <a href="/betting" className="text-gray-400 hover:text-white transition-colors">
+                    Betting
+                  </a>
                 </nav>
               </div>
             </div>
