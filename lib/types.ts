@@ -50,6 +50,57 @@ export interface DashboardSummary {
   total_predictions: number;
 }
 
+export interface BettingSummary {
+  label: string;
+  source: 'honest' | 'research';
+  reportPath: string;
+  total_bets: number;
+  wins: number;
+  losses: number;
+  pushes: number;
+  total_staked: number;
+  profit_loss: number;
+  roi: number | null;
+  hit_rate: number | null;
+  average_odds: number | null;
+  max_drawdown: number;
+  starting_bankroll: number;
+  ending_bankroll: number;
+  odds_policy: string;
+  max_one_bet_per_fight: boolean;
+  kelly_fraction: number;
+  min_edge: number;
+  min_ev: number;
+}
+
+export interface BettingBet {
+  event_name: string;
+  event_date: string;
+  fight_id: string;
+  fighter_name: string;
+  opponent_fighter_name: string;
+  bookmaker: string;
+  line_type: string;
+  odds_timestamp: string;
+  model_probability: number;
+  no_vig_market_probability: number;
+  edge: number;
+  ev_per_unit: number;
+  offered_decimal_odds: number;
+  confidence_tier: string;
+  stake_amount: number;
+  bet_result: string;
+  profit_loss_amount: number;
+  actual_winner_name: string;
+  resolved: boolean;
+}
+
+export interface BettingDashboardData {
+  summaries: BettingSummary[];
+  betsBySummary: Record<string, BettingBet[]>;
+  updatedAt: string | null;
+}
+
 export interface ConfidenceTierStat {
   tier: 'High' | 'Medium' | 'Low' | 'Uncertain';
   total: number;
