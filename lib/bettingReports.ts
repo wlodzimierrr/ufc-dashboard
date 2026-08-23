@@ -1,7 +1,7 @@
 import { query, queryOne } from '@/lib/db/client';
 import { BettingBet, BettingDashboardData, BettingSummary } from '@/lib/types';
 
-const REPORT_KEYS = ['default_policy', 'conservative_candidate', 'kaggle_research'];
+const REPORT_KEYS = ['default_policy', 'conservative_candidate', 'kaggle_research', 'current_bfo_mean'];
 
 interface BettingSummaryRow {
   report_key: string;
@@ -78,8 +78,10 @@ export async function getBettingDashboardData(): Promise<BettingDashboardData> {
           min_ev
         FROM betting_report_summaries
         WHERE report_key = ANY($1::text[])
-          AND summary_type = 'overall'
-          AND group_name = 'all'
+          AND (summary_type, group_name) IN (
+            ('overall', 'all'),
+            ('current_recommendations', 'overall')
+          )
         ORDER BY array_position($1::text[], report_key);
       `,
       [REPORT_KEYS]
